@@ -1,2 +1,2 @@
-# Kullan-c-Giris
+# KullanıcıGiris
 C# Kullanıcı Girişi ile İlgili Örnek
