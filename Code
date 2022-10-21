@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Ders23_09_2022
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        
+        private void btnGiris_Click(object sender, EventArgs e)
+        {
+            string kullanıcı = txtKullanıcıAdı.Text;
+            string sifre = txtSifre.Text;
+            string gelenkullanici=Kullanici(kullanıcı, sifre);// metoddan dönen değerden admin mi kullanıcı mı buldum
+
+
+
+            if (gelenkullanici=="admin") // Admin form sayfasında göreceği alan
+            {
+                this.Width = 800;
+                this.Height = 480;
+            }
+            else if (gelenkullanici=="kullanıcı") // diğer kullanıcıların form sayfasında göreceği alan 
+            {
+                this.Width = 250;
+                this.Height = 480;
+            }
+        }
+        string Kullanici (string kullanıcı,string sifre)  // kullanıcı girişini metod ile yaptım 
+        {
+            string kullanıcıyetki="";
+
+            if (kullanıcı=="bartuhan" && sifre=="1234") // Yetkili Erişim Kayıt Yapılabilir
+            {
+                kullanıcıyetki = "admin";
+            }
+            else if (kullanıcı == "falan" && sifre == "1234") // Sınırlı Erişim Sadece Sınıf Kontejyanı Dolu Mu Değil Mi Gorebılmek için
+            {
+                kullanıcıyetki = "kullanıcı";
+            }
+                
+            return kullanıcıyetki; 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            txtAd.Clear();
+            txtSoyad.Clear();
+            txtOgrNo.Clear();
+            listBox1.Items.Clear();
+            lblkontejyan.Text = "_____";
+            txtKullanıcıAdı.Clear();
+            txtSifre.Clear();
+            this.Width = 250;
+            this.Height = 205;
+
+        }
+
+        int kontejyan = 15;
+        private void Btnkaydet_Click(object sender, EventArgs e)
+        {
+            string isim=txtAd.Text;
+            string soyisim = txtSoyad.Text;
+            string ogrNo = txtOgrNo.Text;
+            string okul=cmOkul.Text;
+            string bolum = cmBolum.Text;
+
+
+            if (kontejyan == 1) // Kontejyan 1 e eşit olduğunda son kez işlem yapıp kaydet butonunu gizledim
+            {
+                MessageBox.Show("Kontejyan Doldu . . .");
+                Btnkaydet.Enabled= false;
+            }
+            if (chctenik.Checked==true) // eğer Teknik Seçili İse 'X' simgesi İle gosterimini sağladım 
+            {
+                listBox1.Items.Add(isim + " " + soyisim + " " + ogrNo + " " + okul + " " + bolum + " " + "X");
+                kontejyan--;
+            }
+            else if(chctenik.Checked==false) // Değilse kısmı Normal
+            {
+                listBox1.Items.Add(isim + " " + soyisim + " " + ogrNo + " " + okul + " " + bolum);
+                kontejyan--;
+            }
+            lblkontejyan.Text=kontejyan.ToString();
+            
+
+
+
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cmOkul.Items.Add("Marmara Üniversitesi");
+            cmOkul.Items.Add("Okan Üniversitesi");
+            cmOkul.Items.Add("Gedik Üniversitesi");
+
+            cmBolum.Items.Add("Bilgisayar Programcılığı");
+            cmBolum.Items.Add("Bilgisayar Mühendisliği");
+            cmBolum.Items.Add("Bilgisayar Bilimi");
+        }
+    }
+}
